@@ -137,6 +137,8 @@ accessTokenUrl' oa code gt = (uri, body)
         body = catMaybes [ Just ("code", encodeUtf8 $ extoken code)
                          , (("redirect_uri",) . serializeURIRef') <$> oauthCallback oa
                          , fmap (("grant_type",) . encodeUtf8) gt
+                         , Just ("client_id", encodeUtf8 $ oauthClientId oa)
+                         , Just ("client_secret", encodeUtf8 $ oauthClientSecret oa)
                          ]
 
 -- | Using a Refresh Token.  Obtain a new access token by

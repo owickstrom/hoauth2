@@ -90,8 +90,7 @@ doSimplePostRequest :: FromJSON err => Manager                 -- ^ HTTP connect
 doSimplePostRequest manager oa url body = fmap handleResponse go
                                   where go = do
                                              req <- uriToRequest url
-                                             let addBasicAuth = applyBasicAuth (T.encodeUtf8 $ oauthClientId oa) (T.encodeUtf8 $ oauthClientSecret oa)
-                                                 req' = (addBasicAuth . updateRequestHeaders Nothing) req
+                                             let req' = updateRequestHeaders Nothing req
                                              httpLbs (urlEncodedBody body req') manager
 
 --------------------------------------------------
